@@ -1,10 +1,10 @@
 # Integrantes do grupo 
 
-Felipe Voidela RM98595
+Felipe Voidela RM 98595
 
-Gustavo Ozeki RM98481
+Gustavo Ozeki RM 98481
 
-Ian Cancian Nachtergaele RM98387
+Ian Cancian Nachtergaele RM 98387
 
 # Jogo Interativo de Estourar Balões com Controle por Mão
 
