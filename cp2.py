@@ -1,9 +1,12 @@
-import cv2
-import mediapipe as mp
-import time
+import cv2                          # OpenCV: captura de vídeo e exibição
+import mediapipe as mp             # MediaPipe: detecção de pontos faciais
+import serial                      # Comunicação com Arduino via porta serial
+import time                        # Usado para dar tempo de inicializar o Arduino
 import random
 
-# Inicializações
+# Inicia conexão com o Arduino 
+arduino = serial.Serial('COM5', 9600, timeout=1)
+time.sleep(2)  # Aguarda o Arduino iniciar
 
 # MediaPipe para rastreamento da mão
 mp_hands = mp.solutions.hands
@@ -14,8 +17,8 @@ mp_draw = mp.solutions.drawing_utils
 cap = cv2.VideoCapture(0)
 
 # Carregamento das imagens
-dardo_img = cv2.resize(cv2.imread("dardo.png"), (50, 50))
-inimigo_img = cv2.resize(cv2.imread("inimigo.png"), (60, 60))
+dardo_img = cv2.resize(cv2.imread("./assets/dardo.png"), (50, 50))
+inimigo_img = cv2.resize(cv2.imread("./assets/inimigo.png"), (60, 60))
 
 # Listas para controlar objetos em jogo
 dardos = []
@@ -54,7 +57,6 @@ while cap.isOpened():
     delay_spawn =  1.0 * (0.96 ** inimigos_abatidos)
 
     # Rastreia a mão 
-
     dedo_levantado = False
     dedo_x, dedo_y = None, None
 
@@ -169,10 +171,20 @@ while cap.isOpened():
     # Atualiza a lista de inimigos com apenas os que continuam vivos/ativos
     inimigos = novos_inimigos
 
+        
 
-    # HUD 
-   
-    cv2.putText(frame, f"Tempo: {int(tempo_decorrido)}s", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+    # Atualiza os LEDs
+    if inimigos_abatidos <= 10:
+        arduino.write(b'G')  
+    elif inimigos_abatidos <= 50:
+        arduino.write(b'Y')  
+    elif inimigos_abatidos >= 100:
+        arduino.write(b'R')  
+
+
+
+    # HUD
+    cv2.putText(frame, f"Tempo: {int(tempo_decorrido)}s", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
     cv2.putText(frame, f"Estouros: {inimigos_abatidos}", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
     cv2.putText(frame, f"Delay Tiro: {delay_disparo:.2f}s", (10, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
     cv2.putText(frame, f"Delay Inimigo: {delay_spawn:.2f}s", (10, 160), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
@@ -185,4 +197,5 @@ while cap.isOpened():
 
 # Finaliza o jogo
 cap.release()
+arduino.close()
 cv2.destroyAllWindows()
