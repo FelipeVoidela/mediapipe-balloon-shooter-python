@@ -1,7 +1,9 @@
 Integrantes do grupo 
 
 Felipe Voidela RM98595
+
 Gustavo Ozeki RM98481
+
 Ian Cancian Nachtergaele RM98387
 
 # Jogo Interativo de Estourar Balões com Controle por Mão
