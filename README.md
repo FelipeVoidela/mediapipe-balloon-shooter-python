@@ -1,3 +1,8 @@
+# Integrantes do grupo 
+# Felipe Voidela RM98595
+# Gustavo Ozeki RM98481
+# Ian Cancian Nachtergaele RM98387
+
 # Jogo Interativo de Estourar Balões com Controle por Mão
 
 ## Descrição
@@ -26,7 +31,7 @@ O jogador deve levantar o dedo indicador para lançar dardos e **acertar inimigo
 - O **Arduino** fornece **feedback físico**:
   - **LED Verde**: menos de 10 inimigos abatidos.
   - **LED Amarelo**: entre 11 e 50 inimigos abatidos.
-  - **LED Vermelho + Buzzer**: mais de 100 inimigos abatidos.
+  - **LED Vermelho**: mais de 100 inimigos abatidos.
 
 ---
 
